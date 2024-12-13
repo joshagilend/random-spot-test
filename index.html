@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Text Box on Canvas</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        canvas {
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="textCanvas"></canvas>
+
+    <script>
+        // Get canvas and set dimensions to match window size
+        const canvas = document.getElementById('textCanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        // Function to generate a random position on the canvas
+        function getRandomPosition(maxWidth, maxHeight, gridWidth, gridHeight) {
+            const x = Math.floor(Math.random() * (maxWidth - gridWidth));
+            const y = Math.floor(Math.random() * (maxHeight - gridHeight));
+            return { x, y };
+        }
+
+        // Draw a 20x20 grid of random red and green text
+        function drawRandomTextGrid() {
+            const gridWidth = 20 * 10; // Approximate width of grid
+            const gridHeight = 20 * 10; // Approximate height of grid
+            const position = getRandomPosition(canvas.width, canvas.height, gridWidth, gridHeight);
+            const { x: startX, y: startY } = position;
+
+            ctx.font = '16px Arial';
+            ctx.textBaseline = 'top';
+
+            for (let row = 0; row < 20; row++) {
+                for (let col = 0; col < 20; col++) {
+                    const text = Math.random() > 0.5 ? 'A' : 'B';
+                    const color = Math.random() > 0.5 ? 'red' : 'green';
+                    ctx.fillStyle = color;
+                    ctx.fillText(text, startX + col * 10, startY + row * 10);
+                }
+            }
+        }
+
+        // Draw the random grid
+        drawRandomTextGrid();
+    </script>
+</body>
+</html>
